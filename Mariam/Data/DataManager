@@ -1,0 +1,15 @@
+package data;
+
+import models.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DataManager {
+    public static List<Transaction> allTransactions = new ArrayList<>();
+    public static UserProfile currentUserProfile = new UserProfile("User123", "USD");
+
+    // Initialize with some dummy data for the console to work
+    static {
+        // You would normally add real objects here
+    }
+}
