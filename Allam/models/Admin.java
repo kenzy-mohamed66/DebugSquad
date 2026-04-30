@@ -1,7 +1,7 @@
-package auth;
+package models;
 
 import java.io.Serializable;
-import java.util.List;
+// import java.util.List;
 
 /**
  * Admin — privileged user who manages the platform.

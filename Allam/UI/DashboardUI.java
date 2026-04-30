@@ -1,13 +1,13 @@
-package ui;
+package UI;
 
-import auth.User;
-import budget.Budget;
-import budget.BudgetAlert;
+import models.User;
+import models.Budget;
+import models.BudgetAlert;
+import models.FinancialGoal;
+import models.Notification;
+import models.Report;
+import models.Transaction;
 import data.DataManager;
-import goals.FinancialGoal;
-import notifications.Notification;
-import reports.Report;
-import transaction.Transaction;
 
 import java.time.LocalDate;
 import java.util.List;

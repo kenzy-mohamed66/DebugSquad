@@ -1,8 +1,8 @@
-package ui;
+package UI;
 
-import auth.User;
+import models.User;
+import models.Notification;
 import data.DataManager;
-import notifications.Notification;
 
 import java.util.List;
 import java.util.Scanner;

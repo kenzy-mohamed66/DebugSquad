@@ -1,4 +1,4 @@
-package notifications;
+package models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

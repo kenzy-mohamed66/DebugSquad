@@ -1,9 +1,9 @@
-package ui;
+package UI;
 
-import auth.User;
+import models.User;
+import models.Report;
+import models.Transaction;
 import data.DataManager;
-import reports.Report;
-import transaction.Transaction;
 
 import java.io.*;
 import java.time.LocalDate;

@@ -1,10 +1,10 @@
-package service;
+package UI;
 
 import data.DataStore;
 import models.User;
 import models.UserProfile;
 
-public class LoginService {
+public class LoginUI {
 
     private final DataStore dataStore = DataStore.getInstance();
 

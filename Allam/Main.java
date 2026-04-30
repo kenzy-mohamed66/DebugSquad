@@ -1,8 +1,8 @@
-import auth.User;
+import models.User;
 import data.DataManager;
-import ui.DashboardUI;
-import ui.LoginUI;
-import ui.SignUpUI;
+import UI.DashboardUI;
+import UI.LoginUI;
+import UI.SignUpUI;
 
 import java.util.Scanner;
 
@@ -67,10 +67,8 @@ public class Main {
     }
 
     private static void printWelcome() {
-        System.out.println("\n╔══════════════════════════════════════╗");
-        System.out.println("║      PERSONAL BUDGETING SYSTEM       ║");
-        System.out.println("║         Cairo University FCAI        ║");
-        System.out.println("╚══════════════════════════════════════╝");
+        System.out.println("\n||      PERSONAL BUDGETING SYSTEM       ||");
+        System.out.println("||         Cairo University FCAI        ||\n");
         System.out.println("1. Login");
         System.out.println("2. Sign Up");
         System.out.println("0. Exit");

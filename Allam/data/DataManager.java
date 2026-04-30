@@ -1,12 +1,12 @@
 package data;
 
-import auth.User;
-import budget.Budget;
-import budget.BudgetAlert;
-import goals.FinancialGoal;
-import notifications.Notification;
-import transaction.Category;
-import transaction.Transaction;
+import models.User;
+import models.Budget;
+import models.BudgetAlert;
+import models.FinancialGoal;
+import models.Notification;
+import models.Category;
+import models.Transaction;
 
 import java.io.*;
 import java.util.ArrayList;

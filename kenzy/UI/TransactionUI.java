@@ -1,4 +1,4 @@
-package service;
+package UI;
 
 import data.DataStore;
 import models.Transaction;
@@ -7,7 +7,7 @@ import models.Transaction.TransactionType;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class TransactionService {
+public class TransactionUI {
 
     private final DataStore dataStore = DataStore.getInstance();
 
