@@ -34,7 +34,7 @@ public class UserProfile implements Serializable {
 
     public boolean verifyCredentials(String email, String password) {
         return email != null && !email.isBlank()
-                && password != null && password.length() >= 8;
+                && password != null && !password.isBlank();
     }
 
     // US#8 seq: displayProfile() → UserProfile.getProfile() → Profile

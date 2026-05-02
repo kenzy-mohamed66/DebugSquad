@@ -24,10 +24,7 @@ public class User implements Serializable {
     public boolean register() {
         if (fullName == null || fullName.isBlank()) return false;
         if (email == null || !email.contains("@")) return false;
-        if (password == null || password.length() < 8) return false;
-        if (!hasUpperCase(password)) return false;
-        if (!hasDigit(password)) return false;
-        if (!hasSpecial(password)) return false;
+        if (password == null || password.isBlank()) return false;
         return true;
     }
 

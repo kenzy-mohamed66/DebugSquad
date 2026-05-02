@@ -84,12 +84,9 @@ public class SignUpUI {
 
     // ─── US#1 seq: validateInput(E, P): bool ──────────────────────────────────
     public boolean validateInput(String email, String password) {
-        if (email == null || !email.contains("@") || !email.contains(".")) return false;
-        if (password == null || password.length() < 8) return false;
-        boolean upper   = password.chars().anyMatch(Character::isUpperCase);
-        boolean digit   = password.chars().anyMatch(Character::isDigit);
-        boolean special = password.chars().anyMatch(c -> "!@#$%^&*()_+-=[]{}|;':\",./<>?".indexOf(c) >= 0);
-        return upper && digit && special;
+        if (email == null || email.isBlank() || !email.contains("@")) return false;
+        if (password == null || password.isBlank()) return false;
+        return true;
     }
 
     // ─── US#1 seq: register(N, E, P): bool → UserProfile.update() ─────────────
