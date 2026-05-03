@@ -9,20 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-/**
- * ReportUI — US#7 sequence diagram.
- *
- * US#7 seq:
- *   User → selectDateRange()
- *   ReportUI → Report.generate()
- *   Report  → Transaction.fetchTransactions(filter)
- *   [No Data Found] → showEmpty()
- *   [Data Exists]   → getCategoryBreakdown(): Map
- *                   → getIncomeVsExpense(): Data
- *   ReportUI → displayPieChart()
- *   ReportUI → displayBarChart()
- *   ReportUI → showInsight("Spending is up 10% in Food")
- */
 public class ReportUI {
 
     private final Scanner scanner;
@@ -37,9 +23,9 @@ public class ReportUI {
     public void start() {
         boolean running = true;
         while (running) {
-            System.out.println("\n╔══════════════════════════════╗");
-            System.out.println("║           REPORTS            ║");
-            System.out.println("╚══════════════════════════════╝");
+            System.out.println("\n-----------------------------------");
+            System.out.println("         REPORTS            ");
+            System.out.println("-----------------------------------");
             System.out.println("1. View Report (select date range)");
             System.out.println("0. Back");
             System.out.print("Choice: ");

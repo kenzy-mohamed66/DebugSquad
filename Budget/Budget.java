@@ -7,18 +7,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
 
-/**
- * Budget — US#3, US#4, US#5, US#10 sequence diagrams.
- *
- * US#3  seq: Transaction.save() → Budget.checkThreshold()
- * US#4  seq: BudgetUI.createBudget() → Budget.create()
- *            BudgetUI.editBudget()   → Budget.update()
- * US#5  seq: Budget.updateSpentAmount(amount) → checkThreshold()
- *                                             → BudgetAlert.generate()
- *                                             → Notification.create()
- * US#10 seq: DashboardUI.checkThreshold() → Budget.checkThreshold()
- *                                         → BudgetAlert.generate(): void
- */
 public class Budget implements Serializable {
 
     private int        budgetID;
@@ -55,10 +43,6 @@ public class Budget implements Serializable {
     }
 
     // ─── US#5: updateSpentAmount(amount) ──────────────────────────────────────
-    /**
-     * US#5 seq: Transaction.save() → Budget.updateSpentAmount(amount)
-     *                              → Budget.checkThreshold()
-     */
     public void updateSpentAmount(BigDecimal amount) {
         if (this.spentAmount == null) this.spentAmount = BigDecimal.ZERO;
         this.spentAmount = this.spentAmount.add(amount);
@@ -66,12 +50,6 @@ public class Budget implements Serializable {
     }
 
     // ─── US#3 & US#5 & US#10: checkThreshold() ────────────────────────────────
-    /**
-     * US#3  seq: Budget.checkThreshold(): void
-     * US#5  seq: Budget.checkThreshold() → BudgetAlert.generate()
-     *                                    → Notification.create(type, message)
-     * US#10 seq: checkThreshold(): void → Budget → BudgetAlert.generate(): void
-     */
     public void checkThreshold() {
         if (limitAmount == null || limitAmount.compareTo(BigDecimal.ZERO) == 0) return;
         if (spentAmount == null) spentAmount = BigDecimal.ZERO;
