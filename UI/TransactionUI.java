@@ -182,7 +182,7 @@ public class TransactionUI {
             showSuccess("Filter applied successfully"); // US#9 [Normal]
             result.forEach(t -> System.out.println("  " + t));
         }
-        displayForm(); // US#9 seq: displayForm() after either branch
+        // Note: loop calls displayForm() at start of next iteration — no duplicate call here
     }
 
     // ─── US#3 & US#9 seq: fetchTransactions(filter) ──────────────────────────

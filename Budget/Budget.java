@@ -76,35 +76,36 @@ public class Budget implements Serializable {
         if (limitAmount == null || limitAmount.compareTo(BigDecimal.ZERO) == 0) return;
         if (spentAmount == null) spentAmount = BigDecimal.ZERO;
 
+        String previousStatus = this.status; // remember before computing
+
         BigDecimal percentage = spentAmount
                 .multiply(new BigDecimal(100))
                 .divide(limitAmount, 2, RoundingMode.HALF_UP);
 
         String catName = getCategoryName();
+        String newStatus;
 
         if (percentage.compareTo(new BigDecimal(100)) >= 0) {
-            this.status = "EXCEEDED";
-            System.out.println("  [Budget] EXCEEDED: " + catName
-                    + " (" + percentage + "%)");
-            // US#5 & US#10: generate() → Notification.create()
-            BudgetAlert alert = new BudgetAlert(budgetID, userID, "EXCEEDED",
-                    "Budget EXCEEDED for " + catName + "! Spent: $" + spentAmount);
-            alert.generate("EXCEEDED",
-                    "Budget EXCEEDED for " + catName + "! Spent: $" + spentAmount);
-
+            newStatus = "EXCEEDED";
         } else if (percentage.compareTo(new BigDecimal(alertThreshold)) >= 0) {
-            this.status = "NEAR_LIMIT";
-            System.out.println("  [Budget] NEAR LIMIT: " + catName
-                    + " (" + percentage + "%)");
-            // US#5 & US#10: generate() → Notification.create()
-            BudgetAlert alert = new BudgetAlert(budgetID, userID, "NEAR_LIMIT",
-                    "Near limit for " + catName + " (" + percentage + "%)");
-            alert.generate("NEAR_LIMIT",
-                    "Near limit for " + catName + " (" + percentage + "%)");
+            newStatus = "NEAR_LIMIT";
         } else {
-            this.status = "ON_TRACK";
-            System.out.println("  [Budget] ON TRACK: " + catName
-                    + " (" + percentage + "%)");
+            newStatus = "ON_TRACK";
+        }
+
+        this.status = newStatus;
+
+        System.out.println("  [Budget] " + newStatus + ": " + catName
+                + " (" + percentage + "%)");
+
+        // Only generate alert + notification when status CHANGES
+        // This prevents duplicate notifications on every refresh/markAsRead
+        if (!newStatus.equals(previousStatus) && !newStatus.equals("ON_TRACK")) {
+            String msg = newStatus.equals("EXCEEDED")
+                    ? "Budget EXCEEDED for " + catName + "! Spent: $" + spentAmount
+                    : "Near limit for " + catName + " (" + percentage + "%)";
+            BudgetAlert alert = new BudgetAlert(budgetID, userID, newStatus, msg);
+            alert.generate(newStatus, msg);
         }
     }
 

@@ -1,6 +1,7 @@
 package data;
 
 import Auth.User;
+import Auth.UserProfile;
 import Budget.Budget;
 import Budget.BudgetAlert;
 import Goals.FinancialGoal;
@@ -22,6 +23,7 @@ public class DataManager {
     private static final String NOTIF_FILE    = DATA_DIR + "notifications.dat";
     private static final String CATEGORY_FILE = DATA_DIR + "categories.dat";
     private static final String ALERTS_FILE   = DATA_DIR + "alerts.dat";
+    private static final String PROFILES_FILE = DATA_DIR + "profiles.dat";
 
     private static List<User>          users         = new ArrayList<>();
     private static List<Transaction>   transactions  = new ArrayList<>();
@@ -30,6 +32,7 @@ public class DataManager {
     private static List<Notification>  notifications = new ArrayList<>();
     private static List<Category>      categories    = new ArrayList<>();
     private static List<BudgetAlert>   alerts        = new ArrayList<>();
+    private static List<UserProfile>   profiles      = new ArrayList<>();
 
     public static void loadAll() {
         users         = loadList(USERS_FILE);
@@ -39,6 +42,7 @@ public class DataManager {
         notifications = loadList(NOTIF_FILE);
         categories    = loadList(CATEGORY_FILE);
         alerts        = loadList(ALERTS_FILE);
+        profiles      = loadList(PROFILES_FILE);
         System.out.println("[DataManager] Data loaded successfully.");
         initDefaultCategories();
     }
@@ -51,6 +55,7 @@ public class DataManager {
         saveList(NOTIF_FILE,     notifications);
         saveList(CATEGORY_FILE,  categories);
         saveList(ALERTS_FILE,    alerts);
+        saveList(PROFILES_FILE,  profiles);
     }
 
     public static void saveUsers()         { saveList(USERS_FILE,    users); }
@@ -60,6 +65,7 @@ public class DataManager {
     public static void saveNotifications() { saveList(NOTIF_FILE,    notifications); }
     public static void saveCategories()    { saveList(CATEGORY_FILE, categories); }
     public static void saveAlerts()        { saveList(ALERTS_FILE,   alerts); }
+    public static void saveProfiles()      { saveList(PROFILES_FILE, profiles); }
 
     @SuppressWarnings("unchecked")
     private static <T> List<T> loadList(String filePath) {
@@ -97,6 +103,27 @@ public class DataManager {
         return users.stream()
                     .filter(u -> u.getUserID() == id)
                     .findFirst().orElse(null);
+    }
+
+    // ─── UserProfile ──────────────────────────────────────────────────────────
+    public static List<UserProfile> getProfiles() { return profiles; }
+
+    public static void addProfile(UserProfile p) { profiles.add(p); saveProfiles(); }
+
+    public static UserProfile getProfileByUser(int userID) {
+        return profiles.stream()
+                       .filter(p -> p.getUserID() == userID)
+                       .findFirst().orElse(null);
+    }
+
+    public static void updateProfile(UserProfile updated) {
+        for (int i = 0; i < profiles.size(); i++) {
+            if (profiles.get(i).getUserID() == updated.getUserID()) {
+                profiles.set(i, updated);
+                break;
+            }
+        }
+        saveProfiles();
     }
 
     // ─── Transaction ──────────────────────────────────────────────────────────

@@ -49,6 +49,17 @@ public class ProfileUI {
         }
     }
 
+    // ─── Loads persisted profile, creates default if missing ─────────────────
+    private UserProfile loadProfile() {
+        UserProfile profile = DataManager.getProfileByUser(currentUser.getUserID());
+        if (profile == null) {
+            // First time — create and persist
+            profile = new UserProfile(currentUser.getUserID(), currentUser.getFullName());
+            DataManager.addProfile(profile);
+        }
+        return profile;
+    }
+
     // ─── US#8 seq: displayProfile() → UserProfile.getProfile() ───────────────
     public void displayProfile() {
         System.out.println("\n--- Profile ---");
@@ -56,13 +67,12 @@ public class ProfileUI {
         System.out.println("  Name  : " + currentUser.getFullName());
         System.out.println("  Email : " + currentUser.getEmail());
 
-        // US#8 seq: UserProfile.getProfile(): Profile
-        UserProfile profile = new UserProfile(currentUser.getUserID(), currentUser.getFullName());
-        String profileData = profile.getProfile();
-        System.out.println(profileData);
+        // US#8 seq: UserProfile.getProfile(): Profile — from persisted data
+        UserProfile profile = loadProfile();
+        System.out.println(profile.getProfile());
     }
 
-    // ─── US#8 seq: displaySettings() → UserProfile.changeCurrency() ───────────
+    // ─── US#8 seq: displaySettings() → UserProfile.changeCurrency() ──────────
     public void displaySettings() {
         System.out.println("\n--- Settings ---");
         System.out.print("New currency (e.g. EGP, USD, EUR): ");
@@ -74,9 +84,14 @@ public class ProfileUI {
         }
 
         try {
+            // Load the real persisted profile
+            UserProfile profile = loadProfile();
+
             // US#8 seq: UserProfile.changeCurrency()
-            UserProfile profile = new UserProfile(currentUser.getUserID(), currentUser.getFullName());
             profile.changeCurrency(currency);
+
+            // Save back to DataManager so it persists
+            DataManager.updateProfile(profile);
 
             // US#8 seq: [Normal] UserSetting.update() → void
             saveChanges(currency); // US#8 seq: saveChanges()
@@ -87,16 +102,11 @@ public class ProfileUI {
 
     // ─── US#8 seq: saveChanges() → UserSetting.update() ─────────────────────
     public void saveChanges(String newCurrency) {
-        try {
-            // US#8 seq: UserSetting.update(): void
-            new UserSetting().update();
-            System.out.println("Currency preference updated to: " + newCurrency);
-        } catch (Exception e) {
-            showErrorMessage();
-        }
+        // US#8 seq: UserSetting.update(): void
+        new UserSetting().update();
+        System.out.println("Currency preference updated to: " + newCurrency);
     }
 
-    // Overload with no args (for backward compat)
     public void saveChanges() {
         new UserSetting().update();
         System.out.println("Settings saved.");

@@ -99,6 +99,7 @@ public class SignUpUI {
         profile.update(fullName, "EGP", "English");
 
         DataManager.addUser(user);
+        DataManager.addProfile(profile); // persist profile so changes survive
         return user;
     }
 
