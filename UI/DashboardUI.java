@@ -2,7 +2,6 @@ package UI;
 
 import Auth.User;
 import Budget.Budget;
-import Budget.BudgetAlert;
 import Goals.FinancialGoal;
 import Notifications.Notification;
 import Reports.Report;
@@ -93,9 +92,9 @@ public class DashboardUI {
     }
 
     public void displayDashboard() {
-        System.out.println("\n╔══════════════════════════════════════╗");
-        System.out.println("║         PERSONAL BUDGET DASHBOARD    ║");
-        System.out.println("╚══════════════════════════════════════╝");
+        System.out.println("\n-----------------------------------");
+        System.out.println("      PERSONAL BUDGET DASHBOARD    ");
+        System.out.println("-----------------------------------");
         System.out.println("Welcome, " + currentUser.getFullName() + "!");
         System.out.println("Date: " + LocalDate.now());
 

@@ -21,9 +21,9 @@ public class ExportUI {
     }
 
     public void displayExportOptions() {
-        System.out.println("\n╔══════════════════════════════╗");
-        System.out.println("║        EXPORT DATA           ║");
-        System.out.println("╚══════════════════════════════╝");
+        System.out.println("\n-----------------------------------");
+        System.out.println("        EXPORT DATA           ");
+        System.out.println("-----------------------------------");
         System.out.println("Format:");
         System.out.println("  1. CSV");
         System.out.println("  2. TXT (plain text report)");
@@ -51,12 +51,9 @@ public class ExportUI {
             return;
         }
 
-        System.out.print("Include Transactions? (y/n): ");
-        boolean inclTransactions = scanner.nextLine().trim().equalsIgnoreCase("y");
-        System.out.print("Include Budget Summary? (y/n): ");
-        boolean inclBudgets = scanner.nextLine().trim().equalsIgnoreCase("y");
-        System.out.print("Include Goals? (y/n): ");
-        boolean inclGoals = scanner.nextLine().trim().equalsIgnoreCase("y");
+        boolean inclTransactions = true ;
+        boolean inclBudgets = true ;
+        boolean inclGoals = true ;
 
         generateFile(format, startDate, endDate, inclTransactions, inclBudgets, inclGoals);
     }

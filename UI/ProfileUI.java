@@ -31,9 +31,9 @@ public class ProfileUI {
     public void start() {
         boolean running = true;
         while (running) {
-            System.out.println("\n╔══════════════════════════════╗");
-            System.out.println("║     PROFILE & SETTINGS       ║");
-            System.out.println("╚══════════════════════════════╝");
+            System.out.println("\n-----------------------------------");
+            System.out.println("        PROFILE & SETTINGS       ");
+            System.out.println("-----------------------------------\n");
             System.out.println("1. View Profile");
             System.out.println("2. Settings / Change Currency");
             System.out.println("0. Back");

@@ -57,9 +57,9 @@ public class GoalUI {
     // ─── US#6 seq: displayGoals() ────────────────────────────────────────────
     public void displayGoals() {
         List<FinancialGoal> goalList = DataManager.getGoalsByUser(currentUser.getUserID());
-        System.out.println("\n╔══════════════════════════════╗");
-        System.out.println("║        FINANCIAL GOALS       ║");
-        System.out.println("╚══════════════════════════════╝");
+        System.out.println("\n-----------------------------------");
+        System.out.println("        FINANCIAL GOALS       ");
+        System.out.println("-----------------------------------\n");
         System.out.println("  Showing all active financial goals");
         if (goalList.isEmpty()) { System.out.println("  No goals found."); return; }
         for (FinancialGoal g : goalList) {

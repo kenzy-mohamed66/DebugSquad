@@ -18,9 +18,9 @@ public class NotificationUI {
     }
 
     public void displayNotifications() {
-        System.out.println("\n╔══════════════════════════════╗");
-        System.out.println("║      NOTIFICATION CENTER     ║");
-        System.out.println("╚══════════════════════════════╝");
+        System.out.println("\n-----------------------------------");
+        System.out.println("        NOTIFICATION CENTER     ");
+        System.out.println("-----------------------------------\n");
 
         List<Notification> notifList = DataManager.getNotificationsByUser(currentUser.getUserID());
 

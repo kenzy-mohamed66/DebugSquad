@@ -33,9 +33,9 @@ public class SignUpUI {
 
     // ─── US#1 seq: displayForm() ──────────────────────────────────────────────
     public void displayForm() {
-        System.out.println("\n╔══════════════════════════════╗");
-        System.out.println("║           SIGN UP            ║");
-        System.out.println("╚══════════════════════════════╝");
+        System.out.println("\n-----------------------------------");
+        System.out.println("        SIGN UP            ");
+        System.out.println("-----------------------------------\n");
 
         System.out.print("Full Name : ");
         String fullName = scanner.nextLine().trim();

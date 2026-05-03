@@ -1,0 +1,11 @@
+=== Financial Report ===
+Period: 2026-05-03 to 2026-05-04
+
+--- Transactions ---
+[1] INCOME  | shopping             | +500.00 EGP | a | 03/05/2026 02:05
+[2] EXPENSE | hals                 | -100.00 EGP | aaa | 03/05/2026 02:05
+[3] EXPENSE | playstation          | -160.00 EGP | t | 03/05/2026 02:07
+[1] INCOME  | fun                  | +3000.00 EGP | for fun activities | 03/05/2026 01:22
+[2] EXPENSE | shopping             | -500.00 EGP | clothes | 03/05/2026 01:23
+[3] EXPENSE | fun                  | -20.00 EGP | ,, | 03/05/2026 01:40
+[4] EXPENSE | fun                  | -2500.00 EGP | .. | 03/05/2026 01:47

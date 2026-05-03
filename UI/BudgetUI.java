@@ -53,9 +53,9 @@ public class BudgetUI {
     // ─── US#4 seq: displayBudgets() ───────────────────────────────────────────
     public void displayBudgets() {
         List<Budget> buds = DataManager.getBudgetsByUser(currentUser.getUserID());
-        System.out.println("\n╔══════════════════════════════╗");
-        System.out.println("║           BUDGETS            ║");
-        System.out.println("╚══════════════════════════════╝");
+        System.out.println("\n-----------------------------------");
+        System.out.println("        BUDGETS            ");
+        System.out.println("-----------------------------------");
         System.out.println("  Showing all active budgets for current month");
         if (buds.isEmpty()) { System.out.println("  No budgets found."); return; }
         for (Budget b : buds) {

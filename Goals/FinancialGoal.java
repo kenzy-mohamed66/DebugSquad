@@ -46,6 +46,7 @@ public class FinancialGoal implements Serializable {
         return r.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : r;
     }
 
+    // Getters and Setters
     public int        getGoalID()        { return goalID; }
     public void       setGoalID(int id)  { this.goalID = id; }
     public int        getGoalId()        { return goalID; }

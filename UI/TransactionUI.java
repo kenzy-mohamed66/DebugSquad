@@ -66,9 +66,9 @@ public class TransactionUI {
 
     // ─── US#3 & US#9 seq: displayForm() ──────────────────────────────────────
     public void displayForm() {
-        System.out.println("\n╔══════════════════════════════╗");
-        System.out.println("║        TRANSACTIONS          ║");
-        System.out.println("╚══════════════════════════════╝");
+        System.out.println("\n-----------------------------------");
+        System.out.println("        TRANSACTIONS          ");
+        System.out.println("-----------------------------------\n");
 
         // US#3 seq: getRecentTransactions(): List<Transaction>
         List<Transaction> recent = getRecentTransactions();

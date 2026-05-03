@@ -6,15 +6,6 @@ import UI.SignUpUI;
 
 import java.util.Scanner;
 
-/**
- * Main — entry point of the Personal Budgeting System.
- *
- * Flow:
- *   1. Load all persisted data via DataManager
- *   2. Welcome screen: Login (US#2) or Sign-Up (US#1)
- *   3. On success → DashboardUI (US#10)
- *   4. On exit → save all data
- */
 public class Main {
 
     public static void main(String[] args) {
@@ -52,15 +43,15 @@ public class Main {
         }
 
         DataManager.saveAll();
-        System.out.println("\nData saved. Goodbye!");
+        System.out.println("\n Data saved. Goodbye!");
         scanner.close();
     }
 
     private static void printWelcome() {
-        System.out.println("\n╔════════════════════════════════════════╗");
-        System.out.println("║    PERSONAL BUDGETING SYSTEM           ║");
-        System.out.println("║    Cairo University — FCAI             ║");
-        System.out.println("╚════════════════════════════════════════╝");
+        System.out.println("\n-----------------------------------");
+        System.out.println("    PERSONAL BUDGETING SYSTEM   ");
+        System.out.println("            MASROOFY            ");
+        System.out.println("-----------------------------------\n");
         System.out.println("1. Login");
         System.out.println("2. Sign Up");
         System.out.println("0. Exit");

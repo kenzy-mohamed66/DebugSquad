@@ -34,14 +34,7 @@ public class User implements Serializable {
     }
 
     public void logout() {
-        // Session cleared by DataManager
-    }
-
-    private boolean hasUpperCase(String s) { return s.chars().anyMatch(Character::isUpperCase); }
-    private boolean hasDigit(String s)     { return s.chars().anyMatch(Character::isDigit); }
-    private boolean hasSpecial(String s)   {
-        String special = "!@#$%^&*()_+-=[]{}|;':\",.//<>?";
-        return s.chars().anyMatch(c -> special.indexOf(c) >= 0);
+        // implemented in LOGIN UI by clearing currentUser reference
     }
 
     public int           getUserID()    { return userID; }
