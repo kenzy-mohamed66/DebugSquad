@@ -3,13 +3,11 @@ package UI;
 import Auth.User;
 import Auth.UserProfile;
 import data.DataManager;
-
 import java.util.Scanner;
 
 public class SignUpUI {
 
     private final Scanner scanner;
-    private User _registeredUser = null;
 
     public SignUpUI(Scanner scanner) {
         this.scanner = scanner;
@@ -17,9 +15,8 @@ public class SignUpUI {
 
     public User start() {
         displayForm();
-        return _registeredUser;
+        return null; 
     }
-
     public void displayForm() {
         System.out.println("\n-----------------------------------");
         System.out.println("        SIGN UP            ");
@@ -36,7 +33,6 @@ public class SignUpUI {
 
         System.out.print("Confirm PW: ");
         String confirmPw = scanner.nextLine().trim();
-
         if (!validateInput(email, password)) {
             showError("Validation failed");
             return;
@@ -56,10 +52,15 @@ public class SignUpUI {
         if (user == null) {
             showError("Validation failed");
         } else {
-            submitRegistration();
+            submitRegistration(); 
             _registeredUser = user;
         }
     }
+
+    private User _registeredUser = null;
+
+    @Override
+    public String toString() { return "SignUpUI"; }
 
     public boolean validateInput(String email, String password) {
         if (email == null || email.isBlank() || !email.contains("@")) return false;
@@ -75,7 +76,7 @@ public class SignUpUI {
         profile.update(fullName, "EGP", "English");
 
         DataManager.addUser(user);
-        DataManager.addProfile(profile);
+        DataManager.addProfile(profile); 
         return user;
     }
 

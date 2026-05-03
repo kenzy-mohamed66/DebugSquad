@@ -12,27 +12,26 @@ public class Transaction implements Serializable {
 
     private static int idCounter = 1;
 
-    private int transactionID;
-    private int userID;
-    private double amount;
-    private LocalDateTime dateTime;
-    private String description;
-    private String category;
+    private int             transactionID;
+    private int             userID;
+    private double          amount;
+    private LocalDateTime   dateTime;
+    private String          description;
+    private String          category;
     private TransactionType typeEnum;
-    private String notes;
+    private String          notes;
 
     public Transaction(int userID, double amount, String category, String description,
                        String notes, TransactionType typeEnum, LocalDateTime dateTime) {
         this.transactionID = idCounter++;
-        this.userID = userID;
-        this.amount = amount;
-        this.category = category;
-        this.description = description;
-        this.notes = notes;
-        this.typeEnum = typeEnum;
-        this.dateTime = dateTime;
+        this.userID        = userID;
+        this.amount        = amount;
+        this.category      = category;
+        this.description   = description;
+        this.notes         = notes;
+        this.typeEnum      = typeEnum;
+        this.dateTime      = dateTime;
     }
-
     public Transaction(double amount, String category, String description,
                        String notes, TransactionType typeEnum, LocalDateTime dateTime) {
         this(0, amount, category, description, notes, typeEnum, dateTime);
@@ -50,7 +49,7 @@ public class Transaction implements Serializable {
     }
 
     public void edit(String category, String description) {
-        if (category != null && !category.isBlank())       this.category = category;
+        if (category    != null && !category.isBlank())    this.category    = category;
         if (description != null && !description.isBlank()) this.description = description;
     }
 
@@ -78,14 +77,14 @@ public class Transaction implements Serializable {
                 description == null || description.isEmpty() ? "-" : description);
     }
 
-    public int getTransactionID()    { return transactionID; }
-    public int getUserID()           { return userID; }
-    public double getAmount()        { return amount; }
-    public String getCategory()      { return category; }
-    public String getDescription()   { return description; }
-    public String getNotes()         { return notes; }
-    public TransactionType getTypeEnum() { return typeEnum; }
-    public LocalDateTime getDateTime()   { return dateTime; }
+    public int             getTransactionID() { return transactionID; }
+    public int             getUserID()        { return userID; }
+    public double          getAmount()        { return amount; }
+    public String          getCategory()      { return category; }
+    public String          getDescription()   { return description; }
+    public String          getNotes()         { return notes; }
+    public TransactionType getTypeEnum()      { return typeEnum; }
+    public LocalDateTime   getDateTime()      { return dateTime; }
 
     public String getFormattedDate() {
         return dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));

@@ -1,92 +1,48 @@
-package UI;
+package Auth;
 
-import Auth.User;
-import Auth.UserProfile;
-import data.DataManager;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-import java.util.Scanner;
+public class User implements Serializable {
 
-public class SignUpUI {
+    private static int idCounter = 1;
 
-    private final Scanner scanner;
-    private User _registeredUser = null;
+    private int           userID;
+    private String        fullName;
+    private String        password;
+    private String        email;
+    private LocalDateTime createdAt;
 
-    public SignUpUI(Scanner scanner) {
-        this.scanner = scanner;
+    public User(String fullName, String email, String password) {
+        this.userID    = idCounter++;
+        this.fullName  = fullName;
+        this.email     = email;
+        this.password  = password;
+        this.createdAt = LocalDateTime.now();
     }
 
-    public User start() {
-        displayForm();
-        return null;
-    }
-
-    public void displayForm() {
-        System.out.println("\n-----------------------------------");
-        System.out.println("        SIGN UP            ");
-        System.out.println("-----------------------------------\n");
-
-        System.out.print("Full Name : ");
-        String fullName = scanner.nextLine().trim();
-
-        System.out.print("Email     : ");
-        String email = scanner.nextLine().trim();
-
-        System.out.print("Password  : ");
-        String password = scanner.nextLine().trim();
-
-        System.out.print("Confirm PW: ");
-        String confirmPw = scanner.nextLine().trim();
-
-        if (!validateInput(email, password)) {
-            showError("Validation failed");
-            return;
-        }
-
-        if (!password.equals(confirmPw)) {
-            showError("Passwords do not match");
-            return;
-        }
-
-        if (DataManager.findUserByEmail(email) != null) {
-            showError("Email already registered");
-            return;
-        }
-
-        User user = register(fullName, email, password);
-        if (user == null) {
-            showError("Validation failed");
-        } else {
-            submitRegistration();
-            _registeredUser = user;
-        }
-    }
-
-    public boolean validateInput(String email, String password) {
-        if (email == null || email.isBlank() || !email.contains("@")) return false;
+    public boolean register() {
+        if (fullName == null || fullName.isBlank()) return false;
+        if (email == null || !email.contains("@")) return false;
         if (password == null || password.isBlank()) return false;
         return true;
     }
 
-    public User register(String fullName, String email, String password) {
-        User user = new User(fullName, email, password);
-        if (!user.register()) return null;
-
-        UserProfile profile = new UserProfile(user.getUserID(), fullName);
-        profile.update(fullName, "EGP", "English");
-
-        DataManager.addUser(user);
-        DataManager.addProfile(profile);
-        return user;
+    public boolean login(String inputEmail, String inputPassword) {
+        return this.email.equalsIgnoreCase(inputEmail)
+                && this.password.equals(inputPassword);
     }
 
-    public void submitRegistration() {
-        System.out.println("\nAccount created successfully!");
-        System.out.println("You can now log in.");
+    public void logout() {
     }
 
-    public void showError(String message) {
-        System.out.println("\n[SignUp Error] " + message);
-    }
-
-    public User getRegisteredUser() { return _registeredUser; }
+    public int           getUserID()    { return userID; }
+    public String        getFullName()  { return fullName; }
+    public String        getEmail()     { return email; }
+    public String        getPassword()  { return password; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setFullName(String n)   { this.fullName = n; }
+    public void setEmail(String e)      { this.email = e; }
+    public void setPassword(String p)   { this.password = p; }
 }
+
