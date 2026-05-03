@@ -9,20 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * GoalUI — US#6 sequence diagram.
- *
- * US#6 seq (Create Goal):
- *   displayGoals()
- *   addGoal() → FinancialGoal.create()
- *     [Exceptional: Invalid Date] → showProgressBar() (error state shown)
- *     [Normal]                    → void returned
- *
- * US#6 seq (Track Progress):
- *   contributeToGoal() → FinancialGoal.addContribution(a)
- *                      → FinancialGoal.calcRemaining(): Decimal
- *   GoalUI.updateProgress()
- */
 public class GoalUI {
 
     private final Scanner scanner;
@@ -33,11 +19,11 @@ public class GoalUI {
         this.currentUser = currentUser;
     }
 
-    // ─── start() — main loop ─────────────────────────────────────────────────
+    //Main loop
     public void start() {
         boolean running = true;
         while (running) {
-            displayGoals(); // US#6 seq: displayGoals()
+            displayGoals(); 
             System.out.println("\n─────────────────────────────");
             System.out.println("1. Create Goal");
             System.out.println("2. Contribute to Goal");
@@ -46,8 +32,8 @@ public class GoalUI {
 
             String choice = scanner.nextLine().trim();
             switch (choice) {
-                case "1" -> addGoal();          // US#6 seq: addGoal()
-                case "2" -> contributeToGoal(); // US#6 seq: contributeToGoal()
+                case "1" -> addGoal();
+                case "2" -> contributeToGoal();
                 case "0" -> running = false;
                 default  -> System.out.println("Invalid choice.");
             }
