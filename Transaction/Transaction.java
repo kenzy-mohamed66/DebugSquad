@@ -32,8 +32,6 @@ public class Transaction implements Serializable {
         this.typeEnum      = typeEnum;
         this.dateTime      = dateTime;
     }
-
-    // Legacy constructor (no userID) — kept for compatibility
     public Transaction(double amount, String category, String description,
                        String notes, TransactionType typeEnum, LocalDateTime dateTime) {
         this(0, amount, category, description, notes, typeEnum, dateTime);
@@ -59,9 +57,7 @@ public class Transaction implements Serializable {
         this.amount = newAmount;
     }
 
-    // Static helper — get recent N transactions for a user
     public static List<Transaction> getRecentTransactions(int userID, int count) {
-        // Returns empty list — actual data comes from DataManager
         return new ArrayList<>();
     }
 
