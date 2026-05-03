@@ -43,7 +43,7 @@ public class DashboardUI {
         boolean running = true;
         while (running) {
             displayDashboard();
-            System.out.println("\n─────────────────────────────");
+            System.out.println("-----------------------------");
             System.out.println("1.  Transactions");
             System.out.println("2.  Budgets");
             System.out.println("3.  Goals");
@@ -112,7 +112,7 @@ public class DashboardUI {
         System.out.printf("  Income        : $%.2f%n", totalIncome);
         System.out.printf("  Expenses      : $%.2f%n", totalExpense);
 
-        System.out.println("\n  ── Recent Transactions ──");
+        System.out.println("\n  --- Recent Transactions ---");
         List<Transaction> recent = DataManager.getTransactionsByUser(currentUser.getUserID());
         int start = Math.max(0, recent.size() - 5);
         List<Transaction> last5 = recent.subList(start, recent.size());
@@ -137,7 +137,7 @@ public class DashboardUI {
         for (Budget b : buds) {
             if (b.getLimitAmount() != null && b.getSpentAmount() != null
                     && b.getSpentAmount().doubleValue() >= b.getLimitAmount().doubleValue() * 0.8) {
-                if (!hasWarning) { System.out.println("\n  ── Budget Warnings ──"); hasWarning = true; }
+                if (!hasWarning) { System.out.println("\n  --- Budget Warnings ---"); hasWarning = true; }
                 System.out.printf("  WARN %s: $%.2f / $%.2f%n",
                         b.getCategoryName(),
                         b.getSpentAmount().doubleValue(),
@@ -149,7 +149,7 @@ public class DashboardUI {
     public void showGoalsSummary() {
         List<FinancialGoal> goalList = DataManager.getGoalsByUser(currentUser.getUserID());
         if (goalList.isEmpty()) return;
-        System.out.println("\n  ── Goals Summary ──");
+        System.out.println("\n  --- Goals Summary ---");
         for (FinancialGoal g : goalList) {
             if (g.getTargetAmount() == null) continue;
             double pct = (g.getCurrentAmount().doubleValue() / g.getTargetAmount().doubleValue()) * 100;

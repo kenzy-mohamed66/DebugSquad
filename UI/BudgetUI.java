@@ -34,7 +34,7 @@ public class BudgetUI {
         boolean running = true;
         while (running) {
             displayBudgets(); // US#4 seq: displayBudgets()
-            System.out.println("\n─────────────────────────────");
+            System.out.println("-----------------------------");
             System.out.println("1. Create Budget");
             System.out.println("2. Edit Budget");
             System.out.println("0. Back");
@@ -159,10 +159,10 @@ public class BudgetUI {
                     spentAmount.doubleValue(), budgetAmount.doubleValue());
     }
 
-    // ─── US#4 seq: showProgressBar() ─────────────────────────────────────────
+    // --- US#4 seq: showProgressBar() ---
     public void showProgressBar(BigDecimal spentAmount, BigDecimal totalAmount) {
         if (totalAmount == null || totalAmount.compareTo(BigDecimal.ZERO) == 0) {
-            System.out.println("  Progress: 0% [░░░░░░░░░░]");
+            System.out.println("  Progress: 0% [----------]  Spent: $0 / $" + totalAmount);
             return;
         }
         int pct = spentAmount.multiply(new BigDecimal(100))
@@ -170,11 +170,11 @@ public class BudgetUI {
         if (pct > 100) pct = 100;
         int filled = pct / 10;
         StringBuilder bar = new StringBuilder("  [");
-        for (int i = 0; i < 10; i++) bar.append(i < filled ? "█" : "░");
-        bar.append("]");
-        String icon = pct >= 100 ? "🔴" : (pct >= 80 ? "🟠" : "🟢");
-        System.out.println(icon + bar + " " + pct + "%"
-                + "  Spent: $" + spentAmount + " / $" + totalAmount);
+        for (int i = 0; i < 10; i++) bar.append(i < filled ? "#" : "-");
+        bar.append("] ").append(pct).append("%")
+           .append("  Spent: $").append(spentAmount).append(" / $").append(totalAmount);
+        String status = pct >= 100 ? "EXCEEDED" : (pct >= 80 ? "WARNING" : "OK");
+        System.out.println(bar + "  [" + status + "]");
     }
 
     // ─── API variants (called from DashboardUI / DataManager code paths) ──────

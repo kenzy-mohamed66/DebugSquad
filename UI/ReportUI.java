@@ -5,6 +5,7 @@ import Reports.Report;
 import data.DataManager;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -85,36 +86,43 @@ public class ReportUI {
         System.out.println("  No data found for this range.");
     }
 
-    // ─── US#7 seq: displayPieChart(data) ─────────────────────────────────────
+    // --- US#7 seq: displayPieChart(data) ---
     public void displayPieChart(Map<String, Double> data) {
-        System.out.println("\n  ── Category Breakdown (Pie Chart) ──");
-        double total = data.values().stream().mapToDouble(Double::doubleValue).sum();
-        data.entrySet().stream()
-                .sorted((a, b) -> Double.compare(b.getValue(), a.getValue()))
-                .forEach(e -> {
-                    int pct = total > 0 ? (int) ((e.getValue() / total) * 100) : 0;
-                    int bars = pct / 5;
-                    StringBuilder bar = new StringBuilder("  ");
-                    for (int i = 0; i < bars; i++) bar.append("█");
-                    System.out.printf("  %-18s $%8.2f  (%2d%%) %s%n",
-                            e.getKey(), e.getValue(), pct, bar);
-                });
+        System.out.println("\n  Category Breakdown:");
+        double total = 0;
+        for (double v : data.values()) total += v;
+
+        List<Map.Entry<String, Double>> entries = new ArrayList<>(data.entrySet());
+        entries.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
+
+        for (Map.Entry<String, Double> e : entries) {
+            int pct = total > 0 ? (int) ((e.getValue() / total) * 100) : 0;
+            int bars = pct / 5;
+            StringBuilder bar = new StringBuilder();
+            for (int i = 0; i < bars; i++) bar.append("#");
+            System.out.printf("  %-18s $%8.2f  (%2d%%) %s%n",
+                    e.getKey(), e.getValue(), pct, bar);
+        }
     }
 
-    // ─── US#7 seq: displayBarChart() ─────────────────────────────────────────
+    // --- US#7 seq: displayBarChart() ---
     public void displayBarChart(Map<String, Double> data) {
-        System.out.println("\n  ── Category Breakdown (Bar Chart) ──");
-        double max = data.values().stream().mapToDouble(Double::doubleValue).max().orElse(1);
-        data.entrySet().stream()
-                .sorted((a, b) -> Double.compare(b.getValue(), a.getValue()))
-                .forEach(e -> {
-                    int bars = (int) ((e.getValue() / max) * 20);
-                    StringBuilder bar = new StringBuilder("[");
-                    for (int i = 0; i < 20; i++) bar.append(i < bars ? "■" : "·");
-                    bar.append("]");
-                    System.out.printf("  %-18s %s $%.2f%n",
-                            e.getKey(), bar, e.getValue());
-                });
+        System.out.println("\n  Spending by Category:");
+        double max = 0;
+        for (double v : data.values()) if (v > max) max = v;
+        if (max == 0) max = 1;
+
+        List<Map.Entry<String, Double>> entries = new ArrayList<>(data.entrySet());
+        entries.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
+
+        for (Map.Entry<String, Double> e : entries) {
+            int bars = (int) ((e.getValue() / max) * 20);
+            StringBuilder bar = new StringBuilder("[");
+            for (int i = 0; i < 20; i++) bar.append(i < bars ? "#" : "-");
+            bar.append("]");
+            System.out.printf("  %-18s %s $%.2f%n",
+                    e.getKey(), bar, e.getValue());
+        }
     }
 
     // ─── US#7 seq: showInsight(msg) ──────────────────────────────────────────

@@ -168,10 +168,10 @@ public class GoalUI {
                 + ("COMPLETED".equals(goal.getStatus()) ? "COMPLETED!" : "IN PROGRESS"));
     }
 
-    // ─── US#6 seq: showProgressBar() ─────────────────────────────────────────
+    // --- US#6 seq: showProgressBar() ---
     public void showProgressBar(BigDecimal current, BigDecimal target) {
         if (target == null || target.compareTo(BigDecimal.ZERO) == 0) {
-            System.out.println("  [░░░░░░░░░░] 0%");
+            System.out.println("  Progress: [----------] 0%");
             return;
         }
         int pct = current.multiply(new BigDecimal(100))
@@ -179,7 +179,7 @@ public class GoalUI {
         if (pct > 100) pct = 100;
         int filled = pct / 10;
         StringBuilder bar = new StringBuilder("  [");
-        for (int i = 0; i < 10; i++) bar.append(i < filled ? "█" : "░");
+        for (int i = 0; i < 10; i++) bar.append(i < filled ? "#" : "-");
         bar.append("] ").append(pct).append("%");
         System.out.println(bar);
     }
