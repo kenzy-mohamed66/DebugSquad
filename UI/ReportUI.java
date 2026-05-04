@@ -22,6 +22,7 @@ public class ReportUI {
     // Main loop
     public void start() {
         boolean running = true;
+
         while (running) {
             System.out.println("\n-----------------------------------");
             System.out.println("         REPORTS            ");
@@ -31,6 +32,7 @@ public class ReportUI {
             System.out.print("Choice: ");
 
             String choice = scanner.nextLine().trim();
+
             switch (choice) {
                 case "1" -> selectDateRange();
                 case "0" -> running = false;
@@ -40,8 +42,10 @@ public class ReportUI {
     }
 
     public void selectDateRange() {
+
         System.out.print("\nStart date (YYYY-MM-DD) [leave blank = start of month]: ");
         String startStr = scanner.nextLine().trim();
+
         System.out.print("End date   (YYYY-MM-DD) [leave blank = today]: ");
         String endStr = scanner.nextLine().trim();
 
@@ -57,9 +61,7 @@ public class ReportUI {
         Map<String, Double> data = report.getCategoryBreakdown();
 
         // Exceptional Scenario
-        if (data == null || data.isEmpty()) {
-            showEmpty();
-        } 
+        if (data == null || data.isEmpty()) { showEmpty();} 
 
         // Normal Scenario
         else {
@@ -69,42 +71,38 @@ public class ReportUI {
         }
     }
 
-    public void showEmpty() {
-        System.out.println("No data found for this range.");
-    }
+    public void showEmpty() { System.out.println("No data found for this range."); }
 
     public void displayPieChart(Map<String, Double> data) {
         System.out.println("\n  Category Breakdown:");
 
         double total = 0;
-        for (double v : data.values()) { 
-            total += v; 
-        }
+
+        for (double v : data.values()) { total += v;}
 
         List<Map.Entry<String, Double>> entries = new ArrayList<>(data.entrySet());
 
         entries.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
 
         for (Map.Entry<String, Double> e : entries) {
+
             int pct = total > 0 ? (int) ((e.getValue() / total) * 100) : 0;
             int bars = pct / 5;
             StringBuilder bar = new StringBuilder();
 
-            for (int i = 0; i < bars; i++) {
-                bar.append("#");
-            }
+            for (int i = 0; i < bars; i++) { bar.append("#"); }
 
             System.out.printf("  %-18s $%8.2f  (%2d%%) %s%n", e.getKey(), e.getValue(), pct, bar);
         }
     }
 
     public void displayBarChart(Map<String, Double> data) {
+
         System.out.println("\n  Spending by Category:");
         
         double max = 0;
-        for (double v : data.values()) {
-            if (v > max) max = v;
-        }
+
+        for (double v : data.values()) { if (v > max) max = v; } 
 
         if (max == 0) max = 1;
 
@@ -112,21 +110,17 @@ public class ReportUI {
         entries.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
 
         for (Map.Entry<String, Double> e : entries) {
+
             int bars = (int) ((e.getValue() / max) * 20);
             StringBuilder bar = new StringBuilder("[");
 
-            for (int i = 0; i < 20; i++) {
-                bar.append(i < bars ? "#" : "-");
-            }
+            for (int i = 0; i < 20; i++) { bar.append(i < bars ? "#" : "-"); }
 
             bar.append("]");
 
-            System.out.printf("  %-18s %s $%.2f%n",
-                    e.getKey(), bar, e.getValue());
+            System.out.printf("  %-18s %s $%.2f%n", e.getKey(), bar, e.getValue());
         }
     }
 
-    public void showInsight(String msg) {
-        System.out.println("\n  Insight: " + msg);
-    }
+    public void showInsight(String msg) { System.out.println("\n  Insight: " + msg); }
 }
