@@ -3,7 +3,6 @@ package UI;
 import Auth.User;
 import Budget.Budget;
 import Goals.FinancialGoal;
-import Notifications.Notification;
 import Reports.Report;
 import Transaction.Transaction;
 import data.DataManager;
@@ -83,7 +82,7 @@ public class DashboardUI {
     }
 
     public void loadRecentTransactions() {
-        // Loaded from DataManager on demand in displayDashboard
+        // Loaded from DataManager in Dashboard UI 
     }
 
     public void checkThreshold() {
