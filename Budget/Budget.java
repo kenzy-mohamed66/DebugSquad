@@ -40,7 +40,7 @@ public class Budget implements Serializable {
     /**
      * Initializes the budget and triggers the initial threshold check.
      */
-    // ─── US#4: create() ───────────────────────────────────────────────────────
+    // story4: create() 
     public void create() {
         System.out.println("Budget created successfully");
         System.out.println("   Category: " + getCategoryName());
@@ -48,13 +48,13 @@ public class Budget implements Serializable {
         System.out.println("   Alert at: " + alertThreshold + "%");
         this.status      = "ON_TRACK";
         this.spentAmount = BigDecimal.ZERO;
-        checkThreshold(); // US#4 seq: create() → checkThreshold()
+        checkThreshold(); 
     }
 
     /**
      * Prints a confirmation message when a budget is updated.
      */
-    // ─── US#4: update() ───────────────────────────────────────────────────────
+    // story4: update()
     public void update() {
         System.out.println("Budget updated: Limit=$" + limitAmount
                 + "  Threshold=" + alertThreshold + "%");
@@ -65,7 +65,7 @@ public class Budget implements Serializable {
      *
      * @param amount the amount newly spent
      */
-    // ─── US#5: updateSpentAmount(amount) ──────────────────────────────────────
+    // story5: updateSpentAmount()
     public void updateSpentAmount(BigDecimal amount) {
         if (this.spentAmount == null) this.spentAmount = BigDecimal.ZERO;
         this.spentAmount = this.spentAmount.add(amount);
@@ -78,7 +78,7 @@ public class Budget implements Serializable {
      * <p>If a status boundary is crossed (e.g., from ON_TRACK to NEAR_LIMIT),
      * a {@link BudgetAlert} is generated.
      */
-    // ─── US#3 & US#5 & US#10: checkThreshold() ────────────────────────────────
+    // story3,5,10: checkThreshold()
     public void checkThreshold() {
         if (limitAmount == null || limitAmount.compareTo(BigDecimal.ZERO) == 0) return;
         if (spentAmount == null) spentAmount = BigDecimal.ZERO;
@@ -121,7 +121,7 @@ public class Budget implements Serializable {
      *
      * @return the remaining amount, or {@code 0} if limit is exceeded
      */
-    // ─── US#5: calcRemaining() ────────────────────────────────────────────────
+    // story5: calcRemaining() 
     public BigDecimal calcRemaining() {
         if (limitAmount == null) return BigDecimal.ZERO;
         if (spentAmount == null) return limitAmount;
@@ -129,7 +129,7 @@ public class Budget implements Serializable {
         return r.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : r;
     }
 
-    // ─── Getters & Setters ────────────────────────────────────────────────────
+    
     /** @return the budget ID */
     public int        getBudgetID()        { return budgetID; }
     /** @param id the budget ID */

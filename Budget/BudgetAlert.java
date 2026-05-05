@@ -113,7 +113,7 @@ public class BudgetAlert implements Serializable {
         System.out.println("Alert marked as read: " + this.message);
     }
 
-    // ─── Getters & Setters ────────────────────────────────────────────────────
+    
     /** @return the alert ID */
     public int     getAlertId()    { return alertId; }
     /** @param id the new alert ID */

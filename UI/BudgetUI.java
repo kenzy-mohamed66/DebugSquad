@@ -43,7 +43,7 @@ public class BudgetUI {
     /**
      * Starts the budget UI loop, displaying budgets and the menu.
      */
-    // ─── start() — main loop ─────────────────────────────────────────────────
+    // start() — main loop 
     public void start() {
         boolean running = true;
         while (running) {
@@ -69,7 +69,7 @@ public class BudgetUI {
     /**
      * Prompts the user to create a new budget for a category.
      */
-    // ─── US#4 seq: createBudget() → Budget.create() ──────────────────────────
+    // story4 seq: createBudget() → Budget.create()
     public void createBudget() {
         System.out.print("\nCategory name: ");
         String catName = scanner.nextLine().trim();
@@ -108,11 +108,11 @@ public class BudgetUI {
         // US#4 seq: [Success] showProgressBar()
         showProgressBar(budget.getSpentAmount(), budget.getLimitAmount());
     }
-    
+
         /**
      * Retrieves and displays all active budgets for the current user.
      */
-    // ─── US#4 seq: displayBudgets() ───────────────────────────────────────────
+    // story4 seq: displayBudgets()
     public void displayBudgets() {
         List<Budget> buds = DataManager.getBudgetsByUser(currentUser.getUserID());
         System.out.println("\n-----------------------------------");
@@ -132,7 +132,7 @@ public class BudgetUI {
     /**
      * Prompts the user to edit an existing budget's limit and threshold.
      */
-    // ─── US#4 seq: editBudget() → Budget.update() ────────────────────────────
+    // story4 seq: editBudget() → Budget.update()
     public void editBudget() {
         List<Budget> buds = DataManager.getBudgetsByUser(currentUser.getUserID());
         if (buds.isEmpty()) { System.out.println("No budgets to edit."); return; }
@@ -173,7 +173,7 @@ public class BudgetUI {
      * @param spentAmount  the amount currently spent
      * @param budgetAmount the total budget limit
      */
-    // ─── US#4 seq: showAlert() ────────────────────────────────────────────────
+    // story4 seq: showAlert() 
     public void showAlert(String categoryName, BigDecimal spentAmount, BigDecimal budgetAmount) {
         System.out.println("\n BUDGET ALERT ");
         if (budgetAmount == null || budgetAmount.compareTo(BigDecimal.ZERO) == 0) {
@@ -197,7 +197,7 @@ public class BudgetUI {
      * @param spentAmount the amount spent so far
      * @param totalAmount the total limit allowed
      */
-    // --- US#4 seq: showProgressBar() ---
+    // story4 seq: showProgressBar() 
     public void showProgressBar(BigDecimal spentAmount, BigDecimal totalAmount) {
         if (totalAmount == null || totalAmount.compareTo(BigDecimal.ZERO) == 0) {
             System.out.println("  Progress: 0% [----------]  Spent: $0 / $" + totalAmount);
@@ -220,7 +220,7 @@ public class BudgetUI {
      *
      * @param budget the budget to check
      */
-    // ─── API variants (called from DashboardUI / DataManager code paths) ──────
+    //  API variants (called from DashboardUI / DataManager code paths) 
     public void checkThreshold(Budget budget) {
         if (budget != null) budget.checkThreshold();
     }

@@ -41,7 +41,7 @@ public class ProfileUI {
     /**
      * Starts the profile UI loop, allowing viewing or updating settings.
      */
-    // ─── start() — main loop ─────────────────────────────────────────────────
+    //start() — main loop 
     public void start() {
         boolean running = true;
         while (running) {
@@ -68,7 +68,7 @@ public class ProfileUI {
      *
      * @return the active {@link UserProfile}
      */
-    // ─── Loads persisted profile, creates default if missing ─────────────────
+    // Loads persisted profile, creates default if missing 
     private UserProfile loadProfile() {
         UserProfile profile = DataManager.getProfileByUser(currentUser.getUserID());
         if (profile == null) {
@@ -82,14 +82,14 @@ public class ProfileUI {
     /**
      * Displays the current user's profile details.
      */
-    // ─── US#8 seq: displayProfile() → UserProfile.getProfile() ───────────────
+    // story8  displayProfile() → UserProfile.getProfile() 
     public void displayProfile() {
         System.out.println("\n--- Profile ---");
         System.out.println("  UserID: " + currentUser.getUserID());
         System.out.println("  Name  : " + currentUser.getFullName());
         System.out.println("  Email : " + currentUser.getEmail());
 
-        // US#8 seq: UserProfile.getProfile(): Profile — from persisted data
+        // story8 : UserProfile.getProfile(): Profile — from persisted data
         UserProfile profile = loadProfile();
         System.out.println(profile.getProfile());
     }
@@ -148,7 +148,7 @@ public class ProfileUI {
     /**
      * Displays an error message indicating an update failure.
      */
-    // ─── US#8 seq: showErrorMessage() ────────────────────────────────────────
+    // story8 : showErrorMessage() 
     public void showErrorMessage() {
         System.out.println("[Profile Error] Update Failed.");
     }
