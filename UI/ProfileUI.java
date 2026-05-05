@@ -8,25 +8,39 @@ import data.DataManager;
 import java.util.Scanner;
 
 /**
- * ProfileUI — US#8 sequence diagram.
+ * Handles the user interface for profile and settings management.
  *
- * US#8 seq:
- *   displayProfile() → UserProfile.getProfile() → Profile
- *   displaySettings() → UserProfile.changeCurrency()
- *   [Exceptional: Update Failed] → showErrorMessage()
- *   [Normal: Success]            → UserSetting.update() → void
- *   saveChanges()
+ * <p>US#8 seq:
+ * <ul>
+ *   <li>displayProfile() → UserProfile.getProfile() → Profile</li>
+ *   <li>displaySettings() → UserProfile.changeCurrency()</li>
+ *   <li>[Exceptional: Update Failed] → showErrorMessage()</li>
+ *   <li>[Normal: Success]            → UserSetting.update() → void</li>
+ *   <li>saveChanges()</li>
+ * </ul>
+ *
+ * @author DebugSquad
+ * @version 1.0
  */
 public class ProfileUI {
 
     private final Scanner scanner;
     private final User    currentUser;
 
+    /**
+     * Constructs a new {@code ProfileUI}.
+     *
+     * @param scanner     the scanner for console input
+     * @param currentUser the currently logged-in user
+     */
     public ProfileUI(Scanner scanner, User currentUser) {
         this.scanner     = scanner;
         this.currentUser = currentUser;
     }
 
+    /**
+     * Starts the profile UI loop, allowing viewing or updating settings.
+     */
     // ─── start() — main loop ─────────────────────────────────────────────────
     public void start() {
         boolean running = true;
@@ -49,6 +63,11 @@ public class ProfileUI {
         }
     }
 
+    /**
+     * Loads the profile from storage, creating a default one if necessary.
+     *
+     * @return the active {@link UserProfile}
+     */
     // ─── Loads persisted profile, creates default if missing ─────────────────
     private UserProfile loadProfile() {
         UserProfile profile = DataManager.getProfileByUser(currentUser.getUserID());
@@ -60,6 +79,9 @@ public class ProfileUI {
         return profile;
     }
 
+    /**
+     * Displays the current user's profile details.
+     */
     // ─── US#8 seq: displayProfile() → UserProfile.getProfile() ───────────────
     public void displayProfile() {
         System.out.println("\n--- Profile ---");
@@ -72,6 +94,9 @@ public class ProfileUI {
         System.out.println(profile.getProfile());
     }
 
+    /**
+     * Prompts the user to change their preferred currency and saves the change.
+     */
     // ─── US#8 seq: displaySettings() → UserProfile.changeCurrency() ──────────
     public void displaySettings() {
         System.out.println("\n--- Settings ---");
@@ -100,6 +125,11 @@ public class ProfileUI {
         }
     }
 
+    /**
+     * Confirm a currency change and triggers a system update notification.
+     *
+     * @param newCurrency the new currency code
+     */
     // ─── US#8 seq: saveChanges() → UserSetting.update() ─────────────────────
     public void saveChanges(String newCurrency) {
         // US#8 seq: UserSetting.update(): void
@@ -107,11 +137,17 @@ public class ProfileUI {
         System.out.println("Currency preference updated to: " + newCurrency);
     }
 
+    /**
+     * Generic method to confirm that settings were saved.
+     */
     public void saveChanges() {
         new UserSetting().update();
         System.out.println("Settings saved.");
     }
 
+    /**
+     * Displays an error message indicating an update failure.
+     */
     // ─── US#8 seq: showErrorMessage() ────────────────────────────────────────
     public void showErrorMessage() {
         System.out.println("[Profile Error] Update Failed.");

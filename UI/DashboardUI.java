@@ -11,6 +11,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Handles the main dashboard interface for logged-in users.
+ *
+ * <p>Serves as the central hub to navigate to transactions, budgets,
+ * goals, reports, profiles, notifications, and exports.
+ *
+ * @author DebugSquad
+ * @version 1.0
+ */
 public class DashboardUI {
 
     private Scanner  scanner;
@@ -24,6 +33,12 @@ public class DashboardUI {
     private NotificationUI notificationUI;
     private ExportUI       exportUI;
 
+    /**
+     * Constructs a new {@code DashboardUI} for a specific user.
+     *
+     * @param scanner     the scanner for console input
+     * @param currentUser the currently logged-in user
+     */
     public DashboardUI(Scanner scanner, User currentUser) {
         this.scanner     = scanner;
         this.currentUser = currentUser;
@@ -37,6 +52,9 @@ public class DashboardUI {
         this.exportUI       = new ExportUI(scanner, currentUser);
     }
 
+    /**
+     * Starts the dashboard session, displaying the main menu loop.
+     */
     public void start() {
         refreshData();
         boolean running = true;
@@ -71,6 +89,9 @@ public class DashboardUI {
         System.out.println("Logged out. Goodbye, " + currentUser.getFullName() + "!");
     }
 
+    /**
+     * Refreshes dashboard data and triggers background checks.
+     */
     public void refreshData() {
         System.out.println("\n[Loading your dashboard...]");
         LocalDate start = LocalDate.now().withDayOfMonth(1);
@@ -81,15 +102,24 @@ public class DashboardUI {
         checkThreshold();
     }
 
+    /**
+     * Loads recent transactions for the dashboard view.
+     */
     public void loadRecentTransactions() {
         // Loaded from DataManager in Dashboard UI 
     }
 
+    /**
+     * Checks all budgets for threshold breaches.
+     */
     public void checkThreshold() {
         List<Budget> userBudgets = DataManager.getBudgetsByUser(currentUser.getUserID());
         for (Budget b : userBudgets) b.checkThreshold();
     }
 
+    /**
+     * Displays the dashboard summary (balance, recents, warnings, goals).
+     */
     public void displayDashboard() {
         System.out.println("\n-----------------------------------");
         System.out.println("      PERSONAL BUDGET DASHBOARD    ");
@@ -130,6 +160,9 @@ public class DashboardUI {
             System.out.println("\n  You have " + unread + " unread notification(s). [Select 6]");
     }
 
+    /**
+     * Checks and displays any budget warnings (spent >= 80% limit).
+     */
     public void showBudgetWarning() {
         List<Budget> buds = DataManager.getBudgetsByUser(currentUser.getUserID());
         boolean hasWarning = false;
@@ -145,6 +178,9 @@ public class DashboardUI {
         }
     }
 
+    /**
+     * Displays a summary of the user's financial goals.
+     */
     public void showGoalsSummary() {
         List<FinancialGoal> goalList = DataManager.getGoalsByUser(currentUser.getUserID());
         if (goalList.isEmpty()) return;

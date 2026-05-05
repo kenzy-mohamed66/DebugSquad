@@ -10,25 +10,39 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * BudgetUI — US#4 sequence diagram.
+ * Handles the user interface for budget management.
  *
- * US#4 seq:
- *   displayBudgets() → [Displays Budget List]
- *   [Normal Create] createBudget() → Budget.create()
- *     [Category Conflict] Budget.checkThreshold() → showAlert()
- *     [Success]           Budget returns void → showProgressBar()
- *   [Edit Existing]  editBudget()  → Budget.update() → void
+ * <p>US#4 seq:
+ * <ul>
+ *   <li>displayBudgets() → [Displays Budget List]</li>
+ *   <li>[Normal Create] createBudget() → Budget.create()</li>
+ *   <li>[Category Conflict] Budget.checkThreshold() → showAlert()</li>
+ *   <li>[Success]           Budget returns void → showProgressBar()</li>
+ *   <li>[Edit Existing]  editBudget()  → Budget.update() → void</li>
+ * </ul>
+ *
+ * @author DebugSquad
+ * @version 1.0
  */
 public class BudgetUI {
 
     private final Scanner scanner;
     private final User    currentUser;
 
+    /**
+     * Constructs a new {@code BudgetUI}.
+     *
+     * @param scanner     the scanner for console input
+     * @param currentUser the currently logged-in user
+     */
     public BudgetUI(Scanner scanner, User currentUser) {
         this.scanner     = scanner;
         this.currentUser = currentUser;
     }
 
+    /**
+     * Starts the budget UI loop, displaying budgets and the menu.
+     */
     // ─── start() — main loop ─────────────────────────────────────────────────
     public void start() {
         boolean running = true;
@@ -50,6 +64,9 @@ public class BudgetUI {
         }
     }
 
+    /**
+     * Retrieves and displays all active budgets for the current user.
+     */
     // ─── US#4 seq: displayBudgets() ───────────────────────────────────────────
     public void displayBudgets() {
         List<Budget> buds = DataManager.getBudgetsByUser(currentUser.getUserID());
@@ -67,6 +84,9 @@ public class BudgetUI {
         }
     }
 
+    /**
+     * Prompts the user to create a new budget for a category.
+     */
     // ─── US#4 seq: createBudget() → Budget.create() ──────────────────────────
     public void createBudget() {
         System.out.print("\nCategory name: ");
@@ -107,6 +127,9 @@ public class BudgetUI {
         showProgressBar(budget.getSpentAmount(), budget.getLimitAmount());
     }
 
+    /**
+     * Prompts the user to edit an existing budget's limit and threshold.
+     */
     // ─── US#4 seq: editBudget() → Budget.update() ────────────────────────────
     public void editBudget() {
         List<Budget> buds = DataManager.getBudgetsByUser(currentUser.getUserID());
@@ -141,6 +164,13 @@ public class BudgetUI {
         System.out.println("Budget updated.");
     }
 
+    /**
+     * Displays a warning alert if a budget threshold is exceeded or if a conflict occurs.
+     *
+     * @param categoryName the budget category
+     * @param spentAmount  the amount currently spent
+     * @param budgetAmount the total budget limit
+     */
     // ─── US#4 seq: showAlert() ────────────────────────────────────────────────
     public void showAlert(String categoryName, BigDecimal spentAmount, BigDecimal budgetAmount) {
         System.out.println("\n BUDGET ALERT ");
@@ -159,6 +189,12 @@ public class BudgetUI {
                     spentAmount.doubleValue(), budgetAmount.doubleValue());
     }
 
+    /**
+     * Renders an ASCII progress bar representing budget usage.
+     *
+     * @param spentAmount the amount spent so far
+     * @param totalAmount the total limit allowed
+     */
     // --- US#4 seq: showProgressBar() ---
     public void showProgressBar(BigDecimal spentAmount, BigDecimal totalAmount) {
         if (totalAmount == null || totalAmount.compareTo(BigDecimal.ZERO) == 0) {
@@ -177,11 +213,23 @@ public class BudgetUI {
         System.out.println(bar + "  [" + status + "]");
     }
 
+    /**
+     * Checks the threshold for a specific budget directly.
+     *
+     * @param budget the budget to check
+     */
     // ─── API variants (called from DashboardUI / DataManager code paths) ──────
     public void checkThreshold(Budget budget) {
         if (budget != null) budget.checkThreshold();
     }
 
+    /**
+     * Programmatically updates a budget's limit and threshold.
+     *
+     * @param budget            the budget to update
+     * @param newAmount         the new limit amount
+     * @param newAlertThreshold the new alert threshold
+     */
     public void update(Budget budget, BigDecimal newAmount, int newAlertThreshold) {
         if (budget == null) { System.out.println("No budget to update"); return; }
         budget.setAmount(newAmount);
@@ -190,6 +238,14 @@ public class BudgetUI {
         DataManager.updateBudget(budget);
     }
 
+    /**
+     * Programmatically creates a budget.
+     *
+     * @param category       the category object
+     * @param amount         the limit amount
+     * @param period         the budget period
+     * @param alertThreshold the alert threshold percentage
+     */
     public void createBudget(Category category, BigDecimal amount, String period, int alertThreshold) {
         if (category == null) { System.out.println("Category cannot be null"); return; }
         Budget budget = new Budget();

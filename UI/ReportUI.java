@@ -9,16 +9,33 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Handles the user interface for generating financial reports.
+ *
+ * <p>Displays visual charts (pie/bar ASCII) for category spending breakdown.
+ *
+ * @author DebugSquad
+ * @version 1.0
+ */
 public class ReportUI {
 
     private final Scanner scanner;
     private final User    currentUser;
 
+    /**
+     * Constructs a new {@code ReportUI}.
+     *
+     * @param scanner     the scanner for console input
+     * @param currentUser the currently logged-in user
+     */
     public ReportUI(Scanner scanner, User currentUser) {
         this.scanner     = scanner;
         this.currentUser = currentUser;
     }
 
+    /**
+     * Starts the report UI loop.
+     */
     // Main loop
     public void start() {
         boolean running = true;
@@ -41,6 +58,9 @@ public class ReportUI {
         }
     }
 
+    /**
+     * Prompts the user for a date range and generates a report.
+     */
     public void selectDateRange() {
 
         System.out.print("\nStart date (YYYY-MM-DD) [leave blank = start of month]: ");
@@ -71,8 +91,14 @@ public class ReportUI {
         }
     }
 
+    /** Shows a message if no data exists. */
     public void showEmpty() { System.out.println("No data found for this range."); }
 
+    /**
+     * Renders a simulated ASCII pie chart (percentage breakdown) of expenses.
+     *
+     * @param data a map of category names to spent amounts
+     */
     public void displayPieChart(Map<String, Double> data) {
         System.out.println("\n  Category Breakdown:");
 
@@ -96,6 +122,11 @@ public class ReportUI {
         }
     }
 
+    /**
+     * Renders a simulated ASCII bar chart (relative breakdown) of expenses.
+     *
+     * @param data a map of category names to spent amounts
+     */
     public void displayBarChart(Map<String, Double> data) {
 
         System.out.println("\n  Spending by Category:");
@@ -122,5 +153,10 @@ public class ReportUI {
         }
     }
 
+    /**
+     * Displays a financial insight based on the report.
+     *
+     * @param msg the insight message
+     */
     public void showInsight(String msg) { System.out.println("\n  Insight: " + msg); }
 }

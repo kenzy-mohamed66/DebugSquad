@@ -10,16 +10,33 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Handles the user interface for exporting data to files.
+ *
+ * <p>Supports CSV and plain TXT output for a specified date range.
+ *
+ * @author DebugSquad
+ * @version 1.0
+ */
 public class ExportUI {
 
     private final Scanner scanner;
     private final User    currentUser;
 
+    /**
+     * Constructs a new {@code ExportUI}.
+     *
+     * @param scanner     the scanner for console input
+     * @param currentUser the currently logged-in user
+     */
     public ExportUI(Scanner scanner, User currentUser) {
         this.scanner     = scanner;
         this.currentUser = currentUser;
     }
 
+    /**
+     * Displays the export menu and prompts the user for format and date range.
+     */
     public void displayExportOptions() {
         System.out.println("\n-----------------------------------");
         System.out.println("        EXPORT DATA           ");
@@ -58,6 +75,16 @@ public class ExportUI {
         generateFile(format, startDate, endDate, inclTransactions, inclBudgets, inclGoals);
     }
 
+    /**
+     * Filters transactions and generates the chosen export file.
+     *
+     * @param format           the requested format ("CSV" or "TXT")
+     * @param startDate        the start of the date range
+     * @param endDate          the end of the date range
+     * @param inclTransactions {@code true} to include transaction list
+     * @param inclBudgets      {@code true} to include budgets (unused in current implementation)
+     * @param inclGoals        {@code true} to include goals (unused in current implementation)
+     */
     public void generateFile(String format,
                              LocalDate startDate, LocalDate endDate,
                              boolean inclTransactions,
@@ -95,10 +122,16 @@ public class ExportUI {
         }
     }
 
+    /** Displays a generic success message upon successful export. */
     public void showSuccess() {
         System.out.println("Your file has been generated successfully.");
     }
 
+    /**
+     * Confirms the generated file name and location to the user.
+     *
+     * @param fileName the name of the exported file
+     */
     public void downloadFile(String fileName) {
         System.out.println("File saved as: " + fileName);
         System.out.println("(Check the project root folder)");

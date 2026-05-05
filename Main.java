@@ -6,8 +6,22 @@ import UI.SignUpUI;
 
 import java.util.Scanner;
 
+/**
+ * The main entry point for the Personal Budgeting System (Masroofy).
+ *
+ * <p>Initializes the application, loads data via {@link DataManager},
+ * and displays the main welcome menu for Login and Sign Up.
+ *
+ * @author DebugSquad
+ * @version 1.0
+ */
 public class Main {
 
+    /**
+     * The main method that starts the application.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
 
         DataManager.loadAll();
@@ -47,6 +61,9 @@ public class Main {
         scanner.close();
     }
 
+    /**
+     * Prints the welcome banner and main menu options.
+     */
     private static void printWelcome() {
         System.out.println("\n-----------------------------------");
         System.out.println("    PERSONAL BUDGETING SYSTEM   ");

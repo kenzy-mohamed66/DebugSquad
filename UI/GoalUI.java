@@ -9,16 +9,33 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Handles the user interface for financial goals management.
+ *
+ * <p>Allows users to view, create, and contribute to their savings goals.
+ *
+ * @author DebugSquad
+ * @version 1.0
+ */
 public class GoalUI {
 
     private final Scanner scanner;
     private final User    currentUser;
 
+    /**
+     * Constructs a new {@code GoalUI}.
+     *
+     * @param scanner     the scanner for console input
+     * @param currentUser the currently logged-in user
+     */
     public GoalUI(Scanner scanner, User currentUser) {
         this.scanner     = scanner;
         this.currentUser = currentUser;
     }
 
+    /**
+     * Starts the goals UI loop, displaying active goals and the main menu.
+     */
     //Main loop
     public void start() {
         boolean running = true;
@@ -42,6 +59,9 @@ public class GoalUI {
         }
     }
 
+    /**
+     * Retrieves and displays all active financial goals for the current user.
+     */
     public void displayGoals() {
 
         List<FinancialGoal> goalList = DataManager.getGoalsByUser(currentUser.getUserID());
@@ -64,6 +84,9 @@ public class GoalUI {
         }
     }
 
+    /**
+     * Prompts the user to create a new financial goal.
+     */
     public void addGoal() {
 
         System.out.print("\nGoal name    : ");
@@ -124,6 +147,9 @@ public class GoalUI {
         DataManager.addGoal(goal);
     }
 
+    /**
+     * Prompts the user to add a monetary contribution to an existing goal.
+     */
     public void contributeToGoal() {
 
         List<FinancialGoal> goalList = DataManager.getGoalsByUser(currentUser.getUserID());
@@ -165,6 +191,12 @@ public class GoalUI {
         updateProgress(goal);
     }
 
+    /**
+     * Submits the contribution amount to the specified goal object.
+     *
+     * @param goal   the target goal
+     * @param amount the amount to contribute
+     */
     public void addContribution(FinancialGoal goal, BigDecimal amount) {
 
         if (goal == null || amount == null) { return; }
@@ -175,6 +207,11 @@ public class GoalUI {
         System.out.println("  Remaining to save: $" + remaining);
     }
 
+    /**
+     * Checks and displays the current completion status of a goal.
+     *
+     * @param goal the goal to update
+     */
     public void updateProgress(FinancialGoal goal) {
 
         if (goal == null || goal.getTargetAmount() == null || goal.getTargetAmount().compareTo(BigDecimal.ZERO) == 0) { return; }
@@ -185,6 +222,12 @@ public class GoalUI {
         System.out.println("  STATUS: " + ("COMPLETED".equals(goal.getStatus()) ? "COMPLETED!" : "IN PROGRESS"));
     }
 
+    /**
+     * Renders an ASCII progress bar for the goal.
+     *
+     * @param current the amount saved so far
+     * @param target  the total target amount
+     */
     public void showProgressBar(BigDecimal current, BigDecimal target) {
 
         if (target == null || target.compareTo(BigDecimal.ZERO) == 0) {
@@ -206,6 +249,12 @@ public class GoalUI {
         System.out.println(bar);
     }
 
+    /**
+     * Calculates the remaining amount needed for the goal.
+     *
+     * @param goal the goal to calculate for
+     * @return the remaining amount
+     */
     public BigDecimal calcRemaining(FinancialGoal goal) {
 
         if (goal == null) { return BigDecimal.ZERO; }
@@ -213,6 +262,14 @@ public class GoalUI {
         return goal.calcRemaining();
     }
 
+    /**
+     * Programmatically creates a goal.
+     *
+     * @param name         the goal name
+     * @param targetAmount the goal target
+     * @param deadline     the goal deadline
+     * @param initialSaved the initial contribution
+     */
     public void createGoal(String name, BigDecimal targetAmount, Date deadline, BigDecimal initialSaved) {
 
         if (name == null || name.isBlank()) { return; }

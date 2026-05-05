@@ -12,16 +12,33 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * Handles the user interface for transaction management.
+ *
+ * <p>Allows users to add income, add expenses, and filter/search existing transactions.
+ *
+ * @author DebugSquad
+ * @version 1.0
+ */
 public class TransactionUI {
 
     private final Scanner scanner;
     private final User    currentUser;
 
+    /**
+     * Constructs a new {@code TransactionUI}.
+     *
+     * @param scanner     the scanner for console input
+     * @param currentUser the currently logged-in user
+     */
     public TransactionUI(Scanner scanner, User currentUser) {
         this.scanner     = scanner;
         this.currentUser = currentUser;
     }
 
+    /**
+     * Starts the transaction UI loop, showing recent transactions and the main menu.
+     */
     public void start() {
         boolean running = true;
         while (running) {
@@ -44,6 +61,9 @@ public class TransactionUI {
         }
     }
 
+    /**
+     * Displays the recent transactions list.
+     */
     public void displayForm() {
         System.out.println("\n-----------------------------------");
         System.out.println("        TRANSACTIONS          ");
@@ -58,12 +78,22 @@ public class TransactionUI {
         }
     }
 
+    /**
+     * Retrieves the up to 5 most recent transactions for the user.
+     *
+     * @return a list of recent transactions
+     */
     public List<Transaction> getRecentTransactions() {
         List<Transaction> all = DataManager.getTransactionsByUser(currentUser.getUserID());
         int start = Math.max(0, all.size() - 5);
         return all.subList(start, all.size());
     }
 
+    /**
+     * Prompts the user to add a new transaction of the specified type.
+     *
+     * @param type the transaction type (INCOME or EXPENSE)
+     */
     private void addTransaction(TransactionType type) {
         System.out.print("Amount: ");
         double amount;
@@ -106,6 +136,12 @@ public class TransactionUI {
         showSuccess(); 
     }
 
+    /**
+     * Updates the budget spent amount if the category matches an existing budget.
+     *
+     * @param category the category name
+     * @param amount   the amount to add
+     */
     private void updateBudgetForTransaction(String category, BigDecimal amount) {
         List<Budget> budgets = DataManager.getBudgetsByUser(currentUser.getUserID());
         for (Budget b : budgets) {
@@ -121,6 +157,9 @@ public class TransactionUI {
         }
     }
 
+    /**
+     * Prompts the user to filter transactions and displays the result.
+     */
     public void filterTransactions() {
         System.out.println("\nFilter by:");
         System.out.println("1. Category");
@@ -152,6 +191,12 @@ public class TransactionUI {
         }
     }
 
+    /**
+     * Fetches and filters the user's transactions based on the query.
+     *
+     * @param filter the filter string ("ALL", "CAT:[name]", "TYPE:[IN/EX]")
+     * @return the filtered list of transactions
+     */
     public List<Transaction> fetchTransactions(String filter) {
         List<Transaction> all = DataManager.getTransactionsByUser(currentUser.getUserID());
         if (filter == null || filter.equals("ALL")) return all;
@@ -170,21 +215,44 @@ public class TransactionUI {
         }
         return all;
     }
+
+    /** Displays a generic success message. */
     public void showSuccess() {
         System.out.println("Transaction saved successfully.");
     }
 
+    /**
+     * Displays a customized success message.
+     *
+     * @param message the message to show
+     */
     public void showSuccess(String message) {
         System.out.println(message);
     }
+
+    /**
+     * Displays an error message.
+     *
+     * @param message the error message to show
+     */
     public void showError(String message) {
         System.out.println("[Error] " + message);
     }
 
+    /**
+     * Retrieves all transactions for the current user.
+     *
+     * @return a list of transactions
+     */
     public List<Transaction> getAllTransactions() {
         return DataManager.getTransactionsByUser(currentUser.getUserID());
     }
 
+    /**
+     * Calculates the total balance for the user (income - expenses).
+     *
+     * @return the total balance
+     */
     public double getTotalBalance() {
         return DataManager.getTransactionsByUser(currentUser.getUserID()).stream()
                 .mapToDouble(t -> t.getTypeEnum() == TransactionType.INCOME
