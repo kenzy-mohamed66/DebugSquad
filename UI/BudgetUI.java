@@ -64,25 +64,7 @@ public class BudgetUI {
         }
     }
 
-    /**
-     * Retrieves and displays all active budgets for the current user.
-     */
-    // ─── US#4 seq: displayBudgets() ───────────────────────────────────────────
-    public void displayBudgets() {
-        List<Budget> buds = DataManager.getBudgetsByUser(currentUser.getUserID());
-        System.out.println("\n-----------------------------------");
-        System.out.println("        BUDGETS            ");
-        System.out.println("-----------------------------------");
-        System.out.println("  Showing all active budgets for current month");
-        if (buds.isEmpty()) { System.out.println("  No budgets found."); return; }
-        for (Budget b : buds) {
-            double limit = b.getLimitAmount() != null ? b.getLimitAmount().doubleValue() : 0;
-            double spent = b.getSpentAmount().doubleValue();
-            System.out.printf("  [%d] %-18s | Limit: $%.2f | Spent: $%.2f | %s%n",
-                    b.getBudgetID(), b.getCategoryName(), limit, spent, b.getStatus());
-            showProgressBar(b.getSpentAmount(), b.getLimitAmount()); // show progress inline
-        }
-    }
+
 
     /**
      * Prompts the user to create a new budget for a category.
@@ -125,6 +107,26 @@ public class BudgetUI {
 
         // US#4 seq: [Success] showProgressBar()
         showProgressBar(budget.getSpentAmount(), budget.getLimitAmount());
+    }
+    
+        /**
+     * Retrieves and displays all active budgets for the current user.
+     */
+    // ─── US#4 seq: displayBudgets() ───────────────────────────────────────────
+    public void displayBudgets() {
+        List<Budget> buds = DataManager.getBudgetsByUser(currentUser.getUserID());
+        System.out.println("\n-----------------------------------");
+        System.out.println("        BUDGETS            ");
+        System.out.println("-----------------------------------");
+        System.out.println("  Showing all active budgets for current month");
+        if (buds.isEmpty()) { System.out.println("  No budgets found."); return; }
+        for (Budget b : buds) {
+            double limit = b.getLimitAmount() != null ? b.getLimitAmount().doubleValue() : 0;
+            double spent = b.getSpentAmount().doubleValue();
+            System.out.printf("  [%d] %-18s | Limit: $%.2f | Spent: $%.2f | %s%n",
+                    b.getBudgetID(), b.getCategoryName(), limit, spent, b.getStatus());
+            showProgressBar(b.getSpentAmount(), b.getLimitAmount()); // show progress inline
+        }
     }
 
     /**
