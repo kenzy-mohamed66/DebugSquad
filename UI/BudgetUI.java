@@ -181,7 +181,7 @@ public class BudgetUI {
             return;
         }
         BigDecimal pct = spentAmount.multiply(new BigDecimal(100))
-                .divide(budgetAmount, 2, BigDecimal.ROUND_HALF_UP);
+                .divide(budgetAmount, 2, java.math.RoundingMode.HALF_UP);
         if (pct.compareTo(new BigDecimal(100)) >= 0)
             System.out.printf("  %s: EXCEEDED! Spent $%.2f of $%.2f%n",
                     categoryName, spentAmount.doubleValue(), budgetAmount.doubleValue());
@@ -204,7 +204,7 @@ public class BudgetUI {
             return;
         }
         int pct = spentAmount.multiply(new BigDecimal(100))
-                .divide(totalAmount, 0, BigDecimal.ROUND_HALF_UP).intValue();
+                .divide(totalAmount, 0, java.math.RoundingMode.HALF_UP).intValue();
         if (pct > 100) pct = 100;
         int filled = pct / 10;
         StringBuilder bar = new StringBuilder("  [");

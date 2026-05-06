@@ -216,8 +216,6 @@ public class GoalUI {
 
         if (goal == null || goal.getTargetAmount() == null || goal.getTargetAmount().compareTo(BigDecimal.ZERO) == 0) { return; }
 
-        BigDecimal pct = goal.getCurrentAmount().multiply(new BigDecimal(100)).divide(goal.getTargetAmount(), 2, BigDecimal.ROUND_HALF_UP);
-
         showProgressBar(goal.getCurrentAmount(), goal.getTargetAmount());
         System.out.println("  STATUS: " + ("COMPLETED".equals(goal.getStatus()) ? "COMPLETED!" : "IN PROGRESS"));
     }
@@ -236,7 +234,7 @@ public class GoalUI {
         }
 
         int pct = current.multiply(new BigDecimal(100))
-                .divide(target, 0, BigDecimal.ROUND_HALF_UP).intValue();
+                .divide(target, 0, java.math.RoundingMode.HALF_UP).intValue();
 
         if (pct > 100) { pct = 100; }
 
