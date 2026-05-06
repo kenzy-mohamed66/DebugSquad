@@ -215,30 +215,6 @@ public class BudgetUI {
         System.out.println(bar + "  [" + status + "]");
     }
 
-    /**
-     * Checks the threshold for a specific budget directly.
-     *
-     * @param budget the budget to check
-     */
-    //  API variants (called from DashboardUI / DataManager code paths) 
-    public void checkThreshold(Budget budget) {
-        if (budget != null) budget.checkThreshold();
-    }
-
-    /**
-     * Programmatically updates a budget's limit and threshold.
-     *
-     * @param budget            the budget to update
-     * @param newAmount         the new limit amount
-     * @param newAlertThreshold the new alert threshold
-     */
-    public void update(Budget budget, BigDecimal newAmount, int newAlertThreshold) {
-        if (budget == null) { System.out.println("No budget to update"); return; }
-        budget.setAmount(newAmount);
-        budget.setAlertThreshold(newAlertThreshold);
-        budget.update();
-        DataManager.updateBudget(budget);
-    }
 
     /**
      * Programmatically creates a budget.

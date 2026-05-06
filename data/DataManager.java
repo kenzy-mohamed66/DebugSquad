@@ -122,9 +122,6 @@ public class DataManager {
     }
 
     // ─── User ─────────────────────────────────────────────────────────────────
-    /** @return the full list of registered users */
-    public static List<User> getUsers() { return users; }
-
     /**
      * Adds a new user and persists the change.
      *
@@ -144,22 +141,7 @@ public class DataManager {
                     .findFirst().orElse(null);
     }
 
-    /**
-     * Finds a user by their unique ID.
-     *
-     * @param id the user ID
-     * @return the {@link User}, or {@code null} if not found
-     */
-    public static User findUserByID(int id) {
-        return users.stream()
-                    .filter(u -> u.getUserID() == id)
-                    .findFirst().orElse(null);
-    }
-
     // ─── UserProfile ──────────────────────────────────────────────────────────
-    /** @return the full list of user profiles */
-    public static List<UserProfile> getProfiles() { return profiles; }
-
     /**
      * Adds a new profile and persists the change.
      *
@@ -195,9 +177,6 @@ public class DataManager {
     }
 
     // ─── Transaction ──────────────────────────────────────────────────────────
-    /** @return the full list of all transactions */
-    public static List<Transaction> getTransactions() { return transactions; }
-
     /**
      * Retrieves all transactions associated with a specific user.
      *
@@ -218,20 +197,7 @@ public class DataManager {
      */
     public static void addTransaction(Transaction t) { transactions.add(t); saveTransactions(); }
 
-    /**
-     * Removes a transaction by its ID and persists the change.
-     *
-     * @param transactionID the ID of the transaction to remove
-     */
-    public static void removeTransaction(int transactionID) {
-        transactions.removeIf(t -> t.getTransactionID() == transactionID);
-        saveTransactions();
-    }
-
     // ─── Budget ───────────────────────────────────────────────────────────────
-    /** @return the full list of all budgets */
-    public static List<Budget> getBudgets() { return budgets; }
-
     /**
      * Retrieves all budgets belonging to a specific user.
      *
@@ -267,9 +233,6 @@ public class DataManager {
     }
 
     // ─── Goal ─────────────────────────────────────────────────────────────────
-    /** @return the full list of all goals */
-    public static List<FinancialGoal> getGoals() { return goals; }
-
     /**
      * Retrieves all financial goals for a specific user.
      *
@@ -305,9 +268,6 @@ public class DataManager {
     }
 
     // ─── Notification ─────────────────────────────────────────────────────────
-    /** @return the full list of system notifications */
-    public static List<Notification> getNotifications() { return notifications; }
-
     /**
      * Retrieves all notifications associated with a specific user.
      *
@@ -341,28 +301,6 @@ public class DataManager {
         }
         saveNotifications();
     }
-
-    // ─── Category ─────────────────────────────────────────────────────────────
-    /** @return the full list of all categories */
-    public static List<Category> getCategories() { return categories; }
-
-    /**
-     * Adds a new category and persists it.
-     *
-     * @param c the category to add
-     */
-    public static void addCategory(Category c) { categories.add(c); saveCategories(); }
-
-    // ─── BudgetAlert ──────────────────────────────────────────────────────────
-    /** @return the full list of budget alerts */
-    public static List<BudgetAlert> getAlerts() { return alerts; }
-
-    /**
-     * Adds a budget alert and persists it.
-     *
-     * @param a the alert to add
-     */
-    public static void addAlert(BudgetAlert a) { alerts.add(a); saveAlerts(); }
 
     // ─── Default categories ───────────────────────────────────────────────────
     /** Initializes a default set of categories if none exist. */

@@ -249,40 +249,5 @@ public class GoalUI {
         System.out.println(bar);
     }
 
-    /**
-     * Calculates the remaining amount needed for the goal.
-     *
-     * @param goal the goal to calculate for
-     * @return the remaining amount
-     */
-    public BigDecimal calcRemaining(FinancialGoal goal) {
 
-        if (goal == null) { return BigDecimal.ZERO; }
-
-        return goal.calcRemaining();
-    }
-
-    /**
-     * Programmatically creates a goal.
-     *
-     * @param name         the goal name
-     * @param targetAmount the goal target
-     * @param deadline     the goal deadline
-     * @param initialSaved the initial contribution
-     */
-    public void createGoal(String name, BigDecimal targetAmount, Date deadline, BigDecimal initialSaved) {
-
-        if (name == null || name.isBlank()) { return; }
-        if (targetAmount == null || targetAmount.compareTo(BigDecimal.ZERO) <= 0) { return; }
-
-        FinancialGoal goal = new FinancialGoal();
-
-        goal.setUserID(currentUser.getUserID());
-        goal.setName(name);
-        goal.setTargetAmount(targetAmount);
-        goal.setDeadline(deadline);
-        goal.setCurrentAmount(initialSaved != null ? initialSaved : BigDecimal.ZERO);
-        goal.create();
-        DataManager.addGoal(goal);
-    }
 }
